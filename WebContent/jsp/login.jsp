@@ -38,6 +38,7 @@
 					location.href = gup("ReturnURL");
 				} else if (data.code == '400') {
 					alert(data.msg);
+					location.reload();
 				}
 			},
 			// 默认返回字符串，设置值等于json则返回json数据

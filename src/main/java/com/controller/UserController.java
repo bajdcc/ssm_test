@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.baomidou.kisso.*;
 import com.baomidou.kisso.annotation.*;
+import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.kisso.web.waf.request.WafRequestWrapper;
 import com.model.User;
 import com.service.UserService;
@@ -38,7 +39,9 @@ public class UserController {
 			@RequestParam(value = "password") String password) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (userService.checkUserByUsername(username) == 0) {
-			User user = new User(username, password);
+			User user = new User();
+			user.setUsername(username);
+			user.setPassword(SaltEncoder.md5SaltEncode(username, password));
 			int id = userService.addUser(user);
 			logger.debug(String.format("add user: id=%d name=%s", id, username));
 			map.put("code", "200");
@@ -79,9 +82,11 @@ public class UserController {
 		WafRequestWrapper req = new WafRequestWrapper(request);
 		String username_ = req.getParameter("username");
 		String password_ = req.getParameter("password");
-		User user = new User(username_, password_);
-		Integer userid = userService.checkUsernamePassword(user);
-		if (userid != null) {
+		User user = new User();
+		user.setUsername(username_);
+		user.setPassword(password_);
+		long userid = userService.validUserAndPassword(user);
+		if (userid != -1) {
 			logger.debug(String.format("login success: name=%s password=%s", username_, password_));
 			map.put("code", "200");
 			map.put("msg", "登录成功！");
@@ -90,7 +95,7 @@ public class UserController {
 			 * authSSOCookie 设置 cookie 同时改变 jsessionId
 			 */
 			SSOToken st = new SSOToken(request);
-			st.setId(userid.longValue());
+			st.setId(userid);
 			st.setUid(username_);
 			st.setType(1);
 

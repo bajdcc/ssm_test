@@ -4,6 +4,7 @@
 <mapper namespace="com.mapper.UserMapper">
 	<!-- 解决表名与字段不匹配 -->
 	<resultMap type="User" id="userResultMap">
+		<result property="userid" column="userid" />
 		<result property="username" column="username" />
 		<result property="password" column="password" />
 	</resultMap>
@@ -13,12 +14,13 @@
 	</select>
 
 	<insert id="addUser" parameterType="User">
-		insert into user(username, password) values(#{username}, #{password})
+		insert into user(username,
+		password) values(#{username}, #{password})
 	</insert>
-	<select id="checkUsernamePassword" resultType="Integer" parameterType="User">
-		select userid from user WHERE username=#{username} AND password=#{password}
+	<select id="getUserInfoByName" resultType="User" parameterType="User">
+		select * from user WHERE username=#{username}
 	</select>
-	<select id="findAllUser" resultMap="userResultMap" resultType="User">
+	<select id="findAllUser" resultType="User">
 		select * from user
 	</select>
 </mapper>

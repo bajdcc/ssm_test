@@ -7,10 +7,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.mapper.UserMapper;
 import com.model.User;
 import com.service.UserService;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 @Service
 @Transactional
@@ -32,8 +32,17 @@ public class UserServiceImpl implements UserService {
 		return userMapper.checkUserByUsername(username);
 	}
 
-	public Integer checkUsernamePassword(User user) {
-		return userMapper.checkUsernamePassword(user);
+	public long validUserAndPassword(User user) {
+		List<User> users = userMapper.getUserInfoByName(user);
+		if (users.isEmpty()) {
+			return -1;// 不存在
+		}
+		User info = users.get(0);
+		if (SaltEncoder.md5SaltValid(user.getUsername(), info.getPassword(), user.getPassword())) {
+			return info.getId();
+		} else {
+			return -1;// 不存在
+		}
 	}
 
 	public List<User> findAllUser() {

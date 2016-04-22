@@ -8,6 +8,6 @@ public interface UserService {
 	
 	int addUser(User user);
 	int checkUserByUsername(String username);
-	Integer checkUsernamePassword(User user);
+	long validUserAndPassword(User user);//检查用户名和密码合法
 	List<User> findAllUser();
 }

@@ -11,6 +11,7 @@
 </head>
 <body>
 	<p>${ userid }，欢迎光临！</p>
+	<p><a href="findAllUser">用户管理</a></p>
 </body>
 
 </html>

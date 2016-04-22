@@ -99,4 +99,10 @@ public class UserController {
 	{
 		return "/register";
 	}
+	
+	@RequestMapping("/index")
+	public String index()
+	{
+		return "/index";
+	}
 }

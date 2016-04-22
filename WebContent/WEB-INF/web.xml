@@ -58,7 +58,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file></welcome-file>
+		<welcome-file>user/index</welcome-file>
 	</welcome-file-list>
 	
 	<jsp-config>

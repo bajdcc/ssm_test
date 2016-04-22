@@ -43,5 +43,5 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<mvc:view-controller path="/" view-name="redirect:/user/toreg"/>
+	<mvc:view-controller path="/" view-name="redirect:/user/index"/>
 </beans>	

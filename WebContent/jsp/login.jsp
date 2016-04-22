@@ -24,6 +24,7 @@ $.validator.setDefaults({
 				function(data) {
 					if (data.code == '200') {
 						alert("msg: "+data.msg+"\n"+"即将跳转。");
+						location.href="/ssm";
 					} else if (data.code == '400') {
 						alert(data.msg);
 					}
@@ -36,7 +37,7 @@ $.validator.setDefaults({
 	}
 });
 
-$().ready(function() {
+$(document).ready(function() {
 	// validate the comment form when it is submitted
 	$("#signupForm").validate({
 		rules: {
@@ -74,7 +75,7 @@ $().ready(function() {
 </style>
 </head>
 <body>
-	<form class="cmxform" id="signupForm" method="post" action="user/login">
+	<form class="cmxform" id="signupForm" method="post" action="login">
 		<fieldset>
 			<legend>请输入你的用户名和密码</legend>
 			<p>

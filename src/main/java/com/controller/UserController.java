@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.kisso.*;
 import com.baomidou.kisso.annotation.*;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.kisso.web.waf.request.WafRequestWrapper;
 import com.model.User;
 import com.service.UserService;
+import com.utils.BTTableCol;
 import com.utils.CaptchaUtil;
 
 @Controller
@@ -152,10 +154,22 @@ public class UserController {
 	}
 
 	@RequestMapping("/findAllUser")
-	public String findAllUser(HttpServletRequest request) {
-		List<User> listUser = userService.findAllUser();
-		request.setAttribute("listUser", listUser);
+	public String findAllUser() {
 		return "/allUser";
+	}
+	
+	@RequestMapping("/ajaxAllUser")
+	public @ResponseBody List<User> ajaxAllUser() {
+		return userService.findAllUser();
+	}
+	
+	@RequestMapping("/ajaxAllUserCol")
+	public @ResponseBody String ajaxAllUserCol() {
+		List<BTTableCol> cols = new ArrayList<>();
+		cols.add(new BTTableCol("id", "User Id"));
+		cols.add(new BTTableCol("username", "User Name"));
+		cols.add(new BTTableCol("password", "User Password"));
+		return JSON.toJSONString(cols);
 	}
 
 	@Login(action = Action.Skip)

@@ -4,19 +4,19 @@
 <mapper namespace="com.mapper.UserMapper">
 	<!-- 解决表名与字段不匹配 -->
 	<resultMap type="User" id="userResultMap">
-		<result property="username" column="username"/>
-		<result property="password" column="password"/>
+		<result property="username" column="username" />
+		<result property="password" column="password" />
 	</resultMap>
-	
-	<select id="checkUserByUsername"  resultType="int" parameterType="java.lang.String">
-	 select count(1) from user WHERE username=#{username}
+
+	<select id="checkUserByUsername" resultType="int" parameterType="java.lang.String">
+		select count(1) from user WHERE username=#{username}
 	</select>
 
-	<insert id="addUser"   parameterType="User">
+	<insert id="addUser" parameterType="User">
 		insert into user(username, password) values(#{username}, #{password})
 	</insert>
-	<select id="checkUsernamePassword" resultType="int" parameterType="User">
-		select count(1) from user WHERE username=#{username} AND password=#{password}
+	<select id="checkUsernamePassword" resultType="Integer" parameterType="User">
+		select userid from user WHERE username=#{username} AND password=#{password}
 	</select>
 	<select id="findAllUser" resultMap="userResultMap" resultType="User">
 		select * from user

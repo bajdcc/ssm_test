@@ -44,4 +44,29 @@
 	</bean>
 	
 	<mvc:view-controller path="/" view-name="redirect:/user/index"/>
+	
+	
+	<!--  kisso 注入初始化，也支持使用 web.xml 初始化 -->
+	<bean id="kissoInit" class="com.baomidou.kisso.web.WebKissoConfigurer" init-method="initKisso">
+		<property name="ssoPropPath" value="sso.properties" />
+		<!-- 测试模式 ，不同环境配置选择设置 -->
+		<property name="runMode" value="test_mode" />
+		<!-- 
+		   此处可以注入 SSOConfig 配置属性，也可以定义自己的 kisso 插件，基础 SSOPlugin 抽象类。
+		 <property name="pluginList">
+		 	<list>
+		 		<bean name="com.xxxx.MyPlugin">
+		 	</list>
+		 </property>
+		 -->
+	</bean>
+	<mvc:interceptors>
+		<!-- SSO 拦截器 -->
+		<!-- path 对所有的请求拦截使用/**，对某个模块下的请求拦截使用：/myPath/* -->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/*" />
+			<mvc:mapping path="/permission/*" />
+			<bean class="com.baomidou.kisso.web.interceptor.SSOSpringInterceptor" />
+		</mvc:interceptor>		
+	</mvc:interceptors>
 </beans>	

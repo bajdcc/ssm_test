@@ -17,7 +17,6 @@ import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.kisso.web.waf.request.WafRequestWrapper;
 import com.model.User;
 import com.service.UserService;
-import com.utils.BTTableCol;
 import com.utils.CaptchaUtil;
 
 @Controller
@@ -161,15 +160,6 @@ public class UserController {
 	@RequestMapping("/ajaxAllUser")
 	public @ResponseBody List<User> ajaxAllUser() {
 		return userService.findAllUser();
-	}
-	
-	@RequestMapping("/ajaxAllUserCol")
-	public @ResponseBody String ajaxAllUserCol() {
-		List<BTTableCol> cols = new ArrayList<>();
-		cols.add(new BTTableCol("id", "User Id"));
-		cols.add(new BTTableCol("username", "User Name"));
-		cols.add(new BTTableCol("password", "User Password"));
-		return JSON.toJSONString(cols);
 	}
 
 	@Login(action = Action.Skip)

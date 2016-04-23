@@ -1,7 +1,6 @@
 package com.model;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.*;
 
 public class User {
 
@@ -12,8 +11,11 @@ public class User {
 	@TableId
 	private Long userid;
 
+	@TableField
 	private String username;
-	private String password;;
+	
+	@TableField
+	private String password;
 
 	public User() {
 		super();

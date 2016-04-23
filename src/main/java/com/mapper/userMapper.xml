@@ -9,17 +9,23 @@
 		<result property="password" column="password" />
 	</resultMap>
 
+	<!-- 查询用户是否存在 -->
 	<select id="checkUserByUsername" resultType="int" parameterType="java.lang.String">
 		select count(1) from user WHERE username=#{username}
 	</select>
 
+	<!-- 添加用户 -->
 	<insert id="addUser" parameterType="User">
 		insert into user(username,
 		password) values(#{username}, #{password})
 	</insert>
+	
+	<!-- 获取用户信息 -->
 	<select id="getUserInfoByName" resultType="User" parameterType="User">
 		select * from user WHERE username=#{username}
 	</select>
+	
+	<!-- 查询所有用户-->
 	<select id="findAllUser" resultType="User">
 		select * from user
 	</select>

@@ -39,7 +39,7 @@ public class UserController {
 	public @ResponseBody Map<String, Object> addUser(@RequestParam(value = "username") String username,
 			@RequestParam(value = "password") String password) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (userService.checkUserByUsername(username) == 0) {
+		if (userService.checkUserByUsername(username)) {
 			User user = new User();
 			user.setUsername(username);
 			user.setPassword(SaltEncoder.md5SaltEncode(username, password));
@@ -58,7 +58,7 @@ public class UserController {
 	@Login(action = Action.Skip)
 	@RequestMapping(value = "/check_user")
 	public @ResponseBody String checkUserAvailable(@RequestParam(value = "username") String username) {
-		if (userService.checkUserByUsername(username) == 0) {
+		if (userService.checkUserByUsername(username)) {
 			return String.valueOf(true);
 		} else {
 			return String.valueOf(false);

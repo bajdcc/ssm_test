@@ -21,17 +21,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int addUser(User user) {
-		// TODO Auto-generated method stub
 		int userid = userMapper.addUser(user);
 		return userid;
 	}
 
 	@Override
-	public int checkUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return userMapper.checkUserByUsername(username);
+	public boolean checkUserByUsername(String username) {
+		return userMapper.checkUserByUsername(username) == 1;
 	}
-
+	
+	@Override
 	public long validUserAndPassword(User user) {
 		List<User> users = userMapper.getUserInfoByName(user);
 		if (users.isEmpty()) {
@@ -45,6 +44,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
 	public List<User> findAllUser() {
 		return userMapper.findAllUser();
 	}
